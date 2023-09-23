@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * MazeSquare.java
  * A helper class for maze solving assignment.
@@ -7,18 +9,43 @@
  */
 public class MazeSquare {
     // Instance variables of your choosing
-    String w;
-    String h;
-    String underscore;
-    int x; //location in the array 
-    int y;
+    String shape;
+    ArrayList<String> mazeSquareArray = new ArrayList<>();
+
     // A constructor, taking whatever parameters you decide:
-    public MazeSquare(/* your parameters here */) {
-    }
-    public String wallType(){
-        String x //idk make some variable here
+    public MazeSquare(String inputshape) {
+        shape = inputshape;
+        
 
         
+    }
+    public String printShapeType() {
+        if (shape.equals("L")){
+            String LShape = ("|     \n|     \n|     \n+-----");
+            mazeSquareArray.add(LShape);
+            System.out.println(LShape);
+            return LShape;
+
+        }
+        if (shape.equals("_")){
+            String downShape = ("      \n      \n      \n+-----");
+            mazeSquareArray.add(downShape);
+            System.out.println(downShape);
+            return downShape;
+        }
+        if (shape.equals("-")){
+            String emptyShape =  ("      \n      \n      \n+     ");
+            mazeSquareArray.add(emptyShape);
+            System.out.println(emptyShape);
+            return emptyShape;
+        }
+        if (shape.equals("|")){
+            String leftShape = ("|     \n|     \n|     \n+     ");
+            mazeSquareArray.add(leftShape);
+            System.out.println(leftShape);
+            return leftShape;
+        }
+        return("");
     }
        
 
