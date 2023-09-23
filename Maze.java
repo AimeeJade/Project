@@ -21,10 +21,15 @@ public class Maze {
     /**
      * Constructor for the Maze class
      */
-    public Maze() {
+    public Maze(){//int width, int height, int start1, int start2, int finish1, int finish2) {
+        // w = width;
+        // h = height;
+        // s1 = start1;
+        // s2 = start2;
+        // f1 = finish1;
+        // f2 = finish2;
         rowList = new ArrayList<ArrayList<MazeSquare>>();
             //join the mazesquares here
-
 
     }
 
@@ -58,15 +63,14 @@ public class Maze {
         f1 = Integer.parseInt(lineParams[0]);
         f2 = Integer.parseInt(lineParams[1]);
 
+        ArrayList<ArrayList<String>> inputList = new ArrayList<>();
         for(int i = 1; i<=h; i++){
-            split each character and put each char from row into a rowList
-            iterate over the list to create each of the maze squares in MazeSquare.java
-
-            
+            lineParams = scanner.nextLine().split("");
+            ArrayList<String> strList = new ArrayList<String>(Arrays.asList(lineParams));
+            inputList.add(strList);
         }
+        System.out.println(inputList.get(0).get(0));
 
-        // YOUR CODE TO FINISH LOADING FILE HERE
-        
     }
 
     /**
@@ -91,15 +95,16 @@ public int calc_size(){
     // This main program acts as a simple unit test for the
     // load-from-file and print-to-System.out Maze capabilities.
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Usage: java Maze mazeFile");
-            System.exit(1);
-        }
-
-        MazeSquare a = new MazeSquare(parameters of row for shape symbol and x and y);
+        // if (args.length != 1) {
+        //     System.err.println("Usage: java Maze mazeFile");
+        //     System.exit(1);
+        // }
 
         Maze maze = new Maze();
-        maze.load(args[0]);
+        MazeSquare maze1 = new MazeSquare("L");
+        maze1.printShapeType();
+
+        maze.load("maze.txt");
         maze.print();
     }
 }
