@@ -21,17 +21,21 @@ public class Maze {
     /**
      * Constructor for the Maze class
      */
-    public Maze(){//int width, int height, int start1, int start2, int finish1, int finish2) {
-        // w = width;
-        // h = height;
-        // s1 = start1;
-        // s2 = start2;
-        // f1 = finish1;
-        // f2 = finish2;
-        rowList = new ArrayList<ArrayList<MazeSquare>>();
-            //join the mazesquares here
+    //public Maze(){
+        //rowList = new ArrayList<ArrayList<MazeSquare>>();
+        //creating an array of dimension w and dimention
+        // MazeSquare[w][h];
 
     }
+
+    public void makeEmptyGrid(int size){
+        rowList = new ArrayList<ArrayList<MazeSquare>>();
+
+        int r = 0;
+
+    }
+
+
 
     /**
      * Load in a Maze from a given file
@@ -69,27 +73,18 @@ public class Maze {
             ArrayList<String> strList = new ArrayList<String>(Arrays.asList(lineParams));
             inputList.add(strList);
         }
-        System.out.println(inputList.get(0).get(0));
 
     }
+
+
 
     /**
      * Print the Maze to System.out
      */
     public void print() {
-        for (int i=1; i<=w; i++)
-        {
-            System.out.print("+-----");
-        }
-        System.out.println("+");
+        
     }
     //add the right wall here
-
-    // MORE METHODS AS YOU NEED THEM
-
-public int calc_size(){
-    return w * h;
-}
 
 
     // This main program acts as a simple unit test for the
@@ -100,9 +95,14 @@ public int calc_size(){
         //     System.exit(1);
         // }
 
+        //for (x < = w);
         Maze maze = new Maze();
-        MazeSquare maze1 = new MazeSquare("L");
-        maze1.printShapeType();
+        // MazeSquare maze1 = new MazeSquare();
+        // maze1.get____
+        // maze1. set blah 
+
+
+        // maze1.printShapeType();
 
         maze.load("maze.txt");
         maze.print();
