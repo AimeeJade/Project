@@ -7,7 +7,6 @@
 import java.util.*;
 import java.io.*;
 
-
 public class Maze {
     private ArrayList<ArrayList<MazeSquare>> rowList;
     private int w;
@@ -21,21 +20,41 @@ public class Maze {
     /**
      * Constructor for the Maze class
      */
-    //public Maze(){
-        //rowList = new ArrayList<ArrayList<MazeSquare>>();
-        //creating an array of dimension w and dimention
-        // MazeSquare[w][h];
-
-    }
-
-    public void makeEmptyGrid(int size){
+    public Maze() {
         rowList = new ArrayList<ArrayList<MazeSquare>>();
+    }
 
+    public void makeEmptyGrid(int h){
+
+        //Do this size times (once for each row)
         int r = 0;
+        while(r<h){
+            r += 1;
+            
+            //We make a row and then add it to our grid
+            ArrayList<MazeSquare> row = new ArrayList<MazeSquare>();
+            for(int c= 0; c<=h; c += 1){
+                //We are adding size number of Letters to the row
+                row.add( new MazeSquare() );
+            }
+
+            rowList.add(row);
+        }
+        System.out.print("\n"+rowList+"\n");
 
     }
 
+     // This returns the character in position row, col of our grid
+     public String getData(int row, int col){
+        MazeSquare temp = rowList.get(row).get(col);
+        return temp.getData();
+    }
 
+    // This changes the character in position row, col of our grid
+    public void setData(int row, int col, String s){
+        MazeSquare temp = rowList.get(row).get(col);
+        temp.setData(s);
+    }
 
     /**
      * Load in a Maze from a given file
@@ -44,6 +63,7 @@ public class Maze {
      */
     public void load(String fileName) {
         // Create a scanner for the given file
+        //System.out.print("hello");
         Scanner scanner = null;
         try {
             scanner = new Scanner(new File(fileName));
@@ -56,7 +76,10 @@ public class Maze {
         String[] lineParams = scanner.nextLine().split(" ");
         w = Integer.parseInt(lineParams[0]);
         h = Integer.parseInt(lineParams[1]);
-        
+
+        // First we read in the size and create an empty grid
+        makeEmptyGrid(h);
+
         lineParams = scanner.nextLine().split(" ");
 
         s1 = Integer.parseInt(lineParams[0]);
@@ -67,25 +90,90 @@ public class Maze {
         f1 = Integer.parseInt(lineParams[0]);
         f2 = Integer.parseInt(lineParams[1]);
 
-        ArrayList<ArrayList<String>> inputList = new ArrayList<>();
-        for(int i = 1; i<=h; i++){
+        for(int row = 0; row < h; row += 1){
             lineParams = scanner.nextLine().split("");
-            ArrayList<String> strList = new ArrayList<String>(Arrays.asList(lineParams));
-            inputList.add(strList);
+            // We split(" ") because the letters are separated by spaces
+            // ... in the input file
+
+            for(int col=0; col < w; col += 1){
+                setData(row, col, lineParams[col]);
+            }
         }
-
+        
+        // YOUR CODE TO FINISH LOADING FILE HERE
     }
-
-
 
     /**
      * Print the Maze to System.out
      */
-    public void print() {
-        
-    }
-    //add the right wall here
+    public void print(){
 
+         for (int loop = 0; loop <= h; loop++){
+            System.out.print("+-----");
+        }
+        System.out.print("+");
+
+        for(int row = 0; row < h; row += 1){
+            
+            System.out.print("\n");
+            int x = 0;
+
+            while (x<= 3){
+                if (x<3){
+                    for(int col =0; col < w; col +=1){
+            
+                        StringJoiner joiner = new StringJoiner("");
+                        
+                            //System.out.print("ENTER:\n");
+                            //System.out.print(getData(row,col));
+                        if (getData(row, col).equals("L")){
+
+                            String LString = "|     ";
+                            joiner.add(LString);
+                        }
+                        if (getData(row, col).equals("_")){
+                            joiner.add("      ");
+                        }
+                        if (getData(row, col).equals("-")){
+                            joiner.add("      ");
+                        }
+                        if (getData(row, col).equals("|")){
+                            joiner.add("|      ");
+                        }
+                        System.out.print(joiner.toString() );
+                   
+                    }
+                x++;
+                System.out.println(x);
+                }
+
+                else if (x == 3){
+                    for(int col =0; col < w; col +=1){
+                        System.out.print("yolo");
+                        StringJoiner joiner2 = new StringJoiner("");
+                        if (getData(row, col) == "L"){
+                            joiner2.add("+-----");
+                        }
+                        if (getData(row, col) == "_"){
+                            joiner2.add("+     ");
+                        }
+                        if (getData(row, col) == "-"){
+                            joiner2.add("+     ");
+                        }
+                        if (getData(row, col) == "|"){
+                            joiner2.add("+      ");
+                        }
+                    System.out.print(joiner2.toString() );
+                }
+                x++;
+                System.out.println(x);
+            }
+            // Println takes us to a new line at the end of the row
+            }
+    }
+    }
+
+    // MORE METHODS AS YOU NEED THEM
 
     // This main program acts as a simple unit test for the
     // load-from-file and print-to-System.out Maze capabilities.
@@ -94,16 +182,9 @@ public class Maze {
         //     System.err.println("Usage: java Maze mazeFile");
         //     System.exit(1);
         // }
-
-        //for (x < = w);
+        //how many h's
+       
         Maze maze = new Maze();
-        // MazeSquare maze1 = new MazeSquare();
-        // maze1.get____
-        // maze1. set blah 
-
-
-        // maze1.printShapeType();
-
         maze.load("maze.txt");
         maze.print();
     }
