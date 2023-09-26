@@ -1,79 +1,33 @@
-import java.util.ArrayList;
-
 /**
  * MazeSquare.java
  * A helper class for maze solving assignment.
  * Represents a single square within a rectangular maze.
  *
- * @author Aimee Yuan and Anika Rajbhandary
+ * @author YOUR NAME AND YOUR PARTNER'S NAME
  */
 public class MazeSquare {
-    // Instance variables of your choosing
-    String shape;
+    String data;
 
-
-    // A constructor, taking whatever parameters you decide:
-    public MazeSquare(String inputshape) {
-        shape = inputshape;
-    }
-    
-    public String getSquareType(){
-        return shape;
+    public String getData(){
+        return data;
     }
 
-    public void setSquareType(String x) {
-        if(x.length()!= 1){
-            System.out.println("Error (length)");
+    //This changes the mazeSquare that is stored in the Letter object
+    public void setData( String x){
+        //We only want to store a single letter 
+        //so it is an error if someone tries to store a longer string
+        if(x.length() != 1){
+            System.out.println("Error in Letter setData method");
+            System.out.println("Attempt to store more than one character");
             System.exit(1);
         }
         else{
-            shape = x;
+            data = x;
         }
-
     }
 
-    // public String getShape() {
-    //     if (shape.equals("L")){
-    //         String LShape = ("|     \n|     \n|     \n+-----");
-    //         mazeSquareArray.add(LShape);
-    //         System.out.println(LShape);
-    //         return LShape;
-
-    //     }
-    //     if (shape.equals("_")){
-    //         String downShape = ("      \n      \n      \n+-----");
-    //         mazeSquareArray.add(downShape);
-    //         System.out.println(downShape);
-    //         return downShape;
-    //     }
-    //     if (shape.equals("-")){
-    //         String emptyShape =  ("      \n      \n      \n+     ");
-    //         mazeSquareArray.add(emptyShape);
-    //         System.out.println(emptyShape);
-    //         return emptyShape;
-    //     }
-    //     if (shape.equals("|")){
-    //         String leftShape = ("|     \n|     \n|     \n+     ");
-    //         mazeSquareArray.add(leftShape);
-    //         System.out.println(leftShape);
-    //         return leftShape;
-    //     }
-    //     return("");
-    // }
-       
-
-    // Whatever methods you want, such as:
-    public boolean hasRightWall() {
-        // if (x = w and y <= h) {
-        //     Square[x][y];
-        //     return true;
-        // }
-        return true;
+    //This is a basic constructor that makes an empty MazeSquare object
+    public MazeSquare(){
+        data = null;
     }
-
-
-    public boolean hasTopWall() {
-        return true;
-    }
-
 }
