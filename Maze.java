@@ -11,10 +11,10 @@ public class Maze {
     private ArrayList<ArrayList<MazeSquare>> rowList;
     private int w;
     private int h;
-    private int s1;
-    private int s2;
-    private int f1;
-    private int f2;
+    private int startColumn;
+    private int startRow;
+    private int finishColumn;
+    private int finishRow;
     // OTHER INSTANCE VARIABLES IF YOU NEED THEM
     
     /**
@@ -82,13 +82,13 @@ public class Maze {
 
         lineParams = scanner.nextLine().split(" ");
 
-        s1 = Integer.parseInt(lineParams[0]);
-        s2 = Integer.parseInt(lineParams[1]);
+        startColumn = Integer.parseInt(lineParams[0]);
+        startRow = Integer.parseInt(lineParams[1]);
         
         lineParams = scanner.nextLine().split(" ");
 
-        f1 = Integer.parseInt(lineParams[0]);
-        f2 = Integer.parseInt(lineParams[1]);
+        finishColumn = Integer.parseInt(lineParams[0]);
+        finishRow = Integer.parseInt(lineParams[1]);
 
         for(int row = 0; row < h; row += 1){
             lineParams = scanner.nextLine().split("");
@@ -108,7 +108,7 @@ public class Maze {
      */
     public void print(){
 
-         for (int loop = 0; loop <= h; loop++){
+        for (int loop = 0; loop <= h; loop++){
             System.out.print("+-----");
         }
         System.out.print("+");
@@ -119,7 +119,7 @@ public class Maze {
             int x = 0;
 
             while (x<= 3){
-                if (x<3){
+                if (x<=2){
                     for(int col =0; col < w; col +=1){
             
                         StringJoiner joiner = new StringJoiner("");
@@ -127,46 +127,108 @@ public class Maze {
                             //System.out.print("ENTER:\n");
                             //System.out.print(getData(row,col));
                         if (getData(row, col).equals("L")){
+                            if (col == startColumn && row == startRow && x == 1){
+                                joiner.add("|  S  ");
+                            }
+                            else if (col == finishColumn && row == finishRow && x == 1){
+                                joiner.add("|  F  ");
+                            }
+                            else{
+                                joiner.add("|     ");
+                            if (col == h)
+                            {
+                                joiner.add("|");
+                            }
+                            }
 
-                            String LString = "|     ";
-                            joiner.add(LString);
                         }
                         if (getData(row, col).equals("_")){
+                            if (col == startColumn && row == startRow && x == 1){
+                                joiner.add("|  S  ");
+                            }
+                            else if (col == finishColumn && row == finishRow && x == 1){
+                                joiner.add("|  F  ");
+                            }
+                            else{
                             joiner.add("      ");
+                            if (col == h)
+                            {
+                                joiner.add("|");
+                            }
                         }
+                    }
                         if (getData(row, col).equals("-")){
+                            if (col == startColumn && row == startRow && x == 1){
+                                joiner.add("|  S  ");
+                            }
+                            else if (col == finishColumn && row == finishRow && x == 1){
+                                joiner.add("|  F  ");
+                            }
+                            else{
                             joiner.add("      ");
+                            if (col == h)
+                            {
+                                joiner.add("|");
+                            }
                         }
+                    }
                         if (getData(row, col).equals("|")){
-                            joiner.add("|      ");
+                            if (col == startColumn && row == startRow && x == 1){
+                                joiner.add("|  S  ");
+                            }
+                            else if (col == finishColumn && row == finishRow && x == 1){
+                                joiner.add("|  F  ");
+                            }
+                            else{
+                            joiner.add("|     ");
+                            if (col == h)
+                            {
+                                joiner.add("|");
+                            }
                         }
+                    }
                         System.out.print(joiner.toString() );
                    
                     }
                 x++;
-                System.out.println(x);
+                System.out.print("\n");
                 }
+                
 
                 else if (x == 3){
                     for(int col =0; col < w; col +=1){
-                        System.out.print("yolo");
                         StringJoiner joiner2 = new StringJoiner("");
-                        if (getData(row, col) == "L"){
+                        if (getData(row, col).equals("L")){
                             joiner2.add("+-----");
+                            if (col == h)
+                            {
+                                joiner2.add("+");
+                            }
                         }
-                        if (getData(row, col) == "_"){
+                        if (getData(row, col).equals("_")){
+                            joiner2.add("+-----");
+                            if (col == h)
+                            {
+                                joiner2.add("+");
+                            }
+                        }
+                        if (getData(row, col).equals("-")){
                             joiner2.add("+     ");
+                            if (col == h)
+                            {
+                                joiner2.add("+");
+                            }
                         }
-                        if (getData(row, col) == "-"){
+                        if (getData(row, col).equals("|")){
                             joiner2.add("+     ");
-                        }
-                        if (getData(row, col) == "|"){
-                            joiner2.add("+      ");
+                            if (col == h)
+                            {
+                                joiner2.add("+");
+                            }
                         }
                     System.out.print(joiner2.toString() );
                 }
                 x++;
-                System.out.println(x);
             }
             // Println takes us to a new line at the end of the row
             }
