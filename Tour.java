@@ -18,7 +18,6 @@ import java.util.ArrayList;
      */
     private class Node {
         private Point p;
-        private Point data;
         private Node next;
 
         
@@ -49,11 +48,11 @@ import java.util.ArrayList;
     //     return 0;
     // }
     public Point getData(){
-        return data;
+        return p;
     }
 
-    public void setData(Point data){
-        this.data = data;
+    public void setData(Point p){
+        this.p = p;
     }
 
     public Node getNext(){
@@ -90,45 +89,65 @@ import java.util.ArrayList;
         if (head == null){
             head = new Node(p);
         } 
-
         Node current = head;
+        double minDist = current.getData().distanceTo(p);
+        Node minNode = head;
         while (current.next != null){
+            if(current.next.getData().distanceTo(p)< minDist){
+                minDist = current.next.getData().distanceTo(p);
+                minNode = current;
+            }
             current = current.next;
-            //System.out.println("next" + current.next);
             System.out.println(current);
         }
+        current.setNext(minNode);
+        minNode.setNext(current.next);
         current.next = lastNode;
+        size++;
+
 
     }
 
     public int size(){
-        Node current = head;
-        while (current != null){
-            current = current.next;
-            size++;
-        }
         return size;
     }
     
-    public double distance(Point p){
+    public double distance(){
         Node current = head;
         double length = 0;
-        while (current != null){
-            double newdistance = current.p.distanceTo(p);
-            System.out.println(newdistance);
+        while (current != null && current.next != null){
+            double newdistance = current.getData().distanceTo(current.next.getData());
             length = length + newdistance;
             current = current.next;
-
         }
-        Point datahead = head.getData();
-        //double lastdistance = current.p.distanceTo(datahead);
+        double moreDistance = current.getData().distanceTo(head.getData());
+        length = length + moreDistance;
         return length;
     }
     
     public void insertSmallest(Point p) {
 
     }
-   
+    
+    public String toString(Point p){
+        Node current = head;
+        String str = "";
+        while (current != null){
+            str += current.p.toString();
+            current = current.next;
+        }
+        return str;
+    }
+
+    public void draw(){
+        Node current = head;
+        while (current.next!= null){
+            current.getData().draw();
+            current.getData().drawTo(current.next.getData());
+            current = current.next;
+        }
+        current.getData().drawTo(head.getData());
+    }
     public static void main(String[] args) {
         /* Use your main() function to test your code as you write it. 
          * This main() will not actually be run once you have the entire
@@ -140,33 +159,31 @@ import java.util.ArrayList;
         
         //One example test could be the follow (uncomment to run):
         
-        Tour tour = new Tour();
-        Point p = new Point(0,0);
-        tour.insertNearest(p);
-        p = new Point(0,100);
-        tour.insertNearest(p);
-        p = new Point(100, 100);
-        tour.insertNearest(p);
-        System.out.println("Tour distance =  " + tour.distance(p));
-        System.out.println("Number of points = "+ tour.size());
+        // Tour tour = new Tour();
+        // NearestInsertion ni = new NearestInsertion();
+        
+        // Point p = new Point(0,0);
+        // tour.insertNearest(p);
+        // p = new Point(0,100);
+        // tour.insertNearest(p);
+        // p = new Point(100, 100);
+        // tour.insertNearest(p);
+        // p = new Point(0, 50);
+        // tour.insertNearest(p);
+        // System.out.println("Tour distance =  " + tour.distance());
+        // System.out.println("Number of points = "+ tour.size());
+        // System.out.println(tour.toString(p));
         
          
-
-        // the tour size should be 3 and the distance 341.42 (don't forget to include the trip back
-        // to the original point)
-    
-        // uncomment the following section to draw the tour, setting w and h to the max x and y 
-        // values that occur in your tour points
 	
-        /*
-        int w = 100 ; //Set this value to the max that x can take on
-        int h = 100 ; //Set this value to the max that y can take on
-        StdDraw.setCanvasSize(w, h);
-        StdDraw.setXscale(0, w);
-        StdDraw.setYscale(0, h);
-        StdDraw.setPenRadius(.005);
-        tour.draw(); 
-        */
+        // int w = 500 ; //Set this value to the max that x can take on
+        // int h = 500 ; //Set this value to the max that y can take on
+        // StdDraw.setCanvasSize(w, h);
+        // StdDraw.setXscale(0, w);
+        // StdDraw.setYscale(0, h);
+        // StdDraw.setPenRadius(.005);
+        // tour.draw(); 
+        
     }
    
 }
