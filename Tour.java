@@ -85,27 +85,36 @@ import java.util.ArrayList;
     // ADD YOUR METHODS BELOW HERE
     
     public void insertNearest(Point p) {
-        Node lastNode = new Node(p);
-        if (head == null){
-            head = new Node(p);
-        } 
+        Node newNodeP = new Node(p);
+        if (head == null) {
+            head = newNodeP;
+            size++;
+            return;
+        }
+    
         Node current = head;
         double minDist = current.getData().distanceTo(p);
-        Node minNode = head;
-        while (current.next != null){
-            if(current.next.getData().distanceTo(p)< minDist){
-                minDist = current.next.getData().distanceTo(p);
-                minNode = current;
+        Node minNode = current;
+        Node prev = null;
+
+        while (current.next != null) {
+            double distance = current.next.getData().distanceTo(p);
+            if (distance < minDist) {
+                minDist = distance;
+                prev = current;
+                minNode = current.next;
             }
             current = current.next;
-            System.out.println(current);
         }
-        current.setNext(minNode);
-        minNode.setNext(current.next);
-        current.next = lastNode;
+    
+        if (prev != null) {
+            prev.setNext(newNodeP);
+        } else {
+            head = newNodeP; 
+        }
+        newNodeP.setNext(minNode);
+    
         size++;
-
-
     }
 
     public int size(){
@@ -159,30 +168,28 @@ import java.util.ArrayList;
         
         //One example test could be the follow (uncomment to run):
         
-        // Tour tour = new Tour();
-        // NearestInsertion ni = new NearestInsertion();
+        Tour tour = new Tour();
         
-        // Point p = new Point(0,0);
-        // tour.insertNearest(p);
-        // p = new Point(0,100);
-        // tour.insertNearest(p);
-        // p = new Point(100, 100);
-        // tour.insertNearest(p);
-        // p = new Point(0, 50);
-        // tour.insertNearest(p);
-        // System.out.println("Tour distance =  " + tour.distance());
-        // System.out.println("Number of points = "+ tour.size());
-        // System.out.println(tour.toString(p));
+        Point p = new Point(0,0);
+        tour.insertNearest(p);
+        p = new Point(0,100);
+        tour.insertNearest(p);
+        p = new Point(100, 100);
+        tour.insertNearest(p);
+        
+        System.out.println("Tour distance =  " + tour.distance());
+        System.out.println("Number of points = "+ tour.size());
+        System.out.println(tour.toString(p));
         
          
 	
-        // int w = 500 ; //Set this value to the max that x can take on
-        // int h = 500 ; //Set this value to the max that y can take on
-        // StdDraw.setCanvasSize(w, h);
-        // StdDraw.setXscale(0, w);
-        // StdDraw.setYscale(0, h);
-        // StdDraw.setPenRadius(.005);
-        // tour.draw(); 
+        int w = 500 ; //Set this value to the max that x can take on
+        int h = 500 ; //Set this value to the max that y can take on
+        StdDraw.setCanvasSize(w, h);
+        StdDraw.setXscale(0, w);
+        StdDraw.setYscale(0, h);
+        StdDraw.setPenRadius(.005);
+        tour.draw(); 
         
     }
    
