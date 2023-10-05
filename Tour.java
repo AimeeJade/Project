@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /**
  * This class creates a Tour of Points using a 
  * Linked List implementation.  The points can
@@ -135,14 +133,61 @@ import java.util.ArrayList;
     }
     
     public void insertSmallest(Point p) {
+        Node newNodeP = new Node(p);
+        if (head == null) {
+            head = newNodeP;
+            size++;
+            return;
+        }
+        Node current = head;
+        double minSum = Double.MAX_VALUE;//current.getData().distanceTo(p) + p.distanceTo(current.next.getData());
+        double totalDistance = distance();
+        Node minNode = current;
+        Node nextMinNode = current.next;
 
-    }
+        while (current.next != null){
+            double originalDistance = current.getData().distanceTo(current.next.getData());
+            double minusOriginal = totalDistance - originalDistance;
+            double sumNodeDistance = current.getData().distanceTo(p) + p.distanceTo(current.next.getData());
+            double sumTotalDistance = sumNodeDistance + minusOriginal;
+            if (sumTotalDistance <= minSum){
+                minSum = sumTotalDistance;
+                minNode = current;
+                nextMinNode = current.next;
+            }
+            current = current.next;
+            }
+        
+        // double originalDistance = current.getData().distanceTo(head.getData());
+        // double minusOriginal = totalDistance - originalDistance;
+        // double sumNodeDistance = current.getData().distanceTo(p) + p.distanceTo(head.getData());
+        // double sumTotalDistance = sumNodeDistance + minusOriginal;
+        // if (sumTotalDistance <= minSum){
+        //     minSum = sumTotalDistance;
+        //     minNode = current;
+        //     nextMinNode = head;
+        // }
+            
+            System.out.println("THIS IS" + current.getData().distanceTo(head.getData()));
+            System.out.println(current.getData().distanceTo(p) + p.distanceTo(head.getData()));
+
+        minNode.setNext(newNodeP);
+        newNodeP.setNext(nextMinNode);
+    
+        size++;
+        }
+        
+
+
+
+    
     
     public String toString(Point p){
         Node current = head;
         String str = "";
         while (current != null){
             str += current.p.toString();
+            str += "n";
             current = current.next;
         }
         return str;
@@ -170,16 +215,16 @@ import java.util.ArrayList;
         
         Tour tour = new Tour();
         
-        Point p = new Point(0,0);
-        tour.insertNearest(p);
-        p = new Point(0,100);
-        tour.insertNearest(p);
-        p = new Point(100, 100);
-        tour.insertNearest(p);
+        // Point p = new Point(0,0);
+        // tour.insertSmallest(p);
+        // p = new Point(0,100);
+        // tour.insertSmallest(p);
+        // p = new Point(100, 100);
+        // tour.insertSmallest(p);
         
-        System.out.println("Tour distance =  " + tour.distance());
-        System.out.println("Number of points = "+ tour.size());
-        System.out.println(tour.toString(p));
+        // System.out.println("Tour distance =  " + tour.distance());
+        // System.out.println("Number of points = "+ tour.size());
+        // System.out.println(tour.toString(p));
         
          
 	
