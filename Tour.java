@@ -144,6 +144,7 @@
         double totalDistance = distance();
         Node minNode = current;
         Node nextMinNode = current.next;
+        Node temp = null;
 
         while (current.next != null){
             double originalDistance = current.getData().distanceTo(current.next.getData());
@@ -156,38 +157,30 @@
                 nextMinNode = current.next;
             }
             current = current.next;
-            }
-        
-        // double originalDistance = current.getData().distanceTo(head.getData());
-        // double minusOriginal = totalDistance - originalDistance;
-        // double sumNodeDistance = current.getData().distanceTo(p) + p.distanceTo(head.getData());
-        // double sumTotalDistance = sumNodeDistance + minusOriginal;
-        // if (sumTotalDistance <= minSum){
-        //     minSum = sumTotalDistance;
-        //     minNode = current;
-        //     nextMinNode = head;
-        // }
-            
-            System.out.println("THIS IS" + current.getData().distanceTo(head.getData()));
-            System.out.println(current.getData().distanceTo(p) + p.distanceTo(head.getData()));
-
-        minNode.setNext(newNodeP);
-        newNodeP.setNext(nextMinNode);
-    
-        size++;
+        }
+        //System.out.println(head.getData());
+        double originalDistance = current.getData().distanceTo(head.getData());
+        double minusOriginal = totalDistance - originalDistance;
+        double sumNodeDistance = current.getData().distanceTo(p) + p.distanceTo(head.getData());
+        double sumTotalDistance = sumNodeDistance + minusOriginal;
+        if (sumTotalDistance <= minSum){
+            minSum = sumTotalDistance;
+            minNode = current;
+            nextMinNode = head;
         }
         
-
-
-
-    
-    
+        minNode.setNext(newNodeP);
+        newNodeP.setNext(nextMinNode);
+        
+        size++;
+    }
+        
     public String toString(Point p){
         Node current = head;
         String str = "";
         while (current != null){
             str += current.p.toString();
-            str += "n";
+            str += "\n";
             current = current.next;
         }
         return str;
@@ -215,16 +208,20 @@
         
         Tour tour = new Tour();
         
-        // Point p = new Point(0,0);
-        // tour.insertSmallest(p);
-        // p = new Point(0,100);
-        // tour.insertSmallest(p);
-        // p = new Point(100, 100);
-        // tour.insertSmallest(p);
+        Point p = new Point(0,0);
+        tour.insertSmallest(p);
+        p = new Point(0,100);
+        tour.insertSmallest(p);
+        p = new Point(100, 100);
+        tour.insertSmallest(p);
+        System.out.println("hi");
+
+        p = new Point(200,105);
+        tour.insertSmallest(p);
         
-        // System.out.println("Tour distance =  " + tour.distance());
-        // System.out.println("Number of points = "+ tour.size());
-        // System.out.println(tour.toString(p));
+        System.out.println("Tour distance =  " + tour.distance());
+        System.out.println("Number of points = "+ tour.size());
+        System.out.println(tour.toString(p));
         
          
 	
