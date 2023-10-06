@@ -1,14 +1,4 @@
-/**
- * This class creates a Tour of Points using a 
- * Linked List implementation.  The points can
- * be inserted into the list using two heuristics.
- *
- * @author ANIKA RAJBHANDARY AND AIMEE YUAN
- * @author Eric Alexander, modified code 01-12-2018
- * @author Layla Oesper, modified code 09-22-2017
- */
-
- public class Tour {
+public class Tour2 {
     /** 
      * A helper class that defines a single node for use in a tour.
      * A node consists of a Point, representing the location of that
@@ -18,33 +8,16 @@
         private Point p;
         private Node next;
 
-        
-        
-        /** 
-         * Constructor creates a new Node at the given Point newP
-         * with an initial next value of null.
-         * 
-         * @param newP the point to associate with the Node.
-         */
         public Node(Point newP) {
             p = newP;
             next = null;
         }
 
-        /** 
-         * Constructor creates a new Node at the given Point newP
-         * with the specified next node.
-         *
-         * @param newP the point to associate with the Node.
-         * @param nextNode the nextNode this node should point to.
-         */
         public Node(Point newP, Node nextNode) {
             p = newP;
             next = nextNode;
         }
-    // public int size(){
-    //     return 0;
-    // }
+    
     public Point getData(){
         return p;
     }
@@ -62,25 +35,17 @@
     }
     
     
-    } // End Node class
+    }
     
-
-    // Tour class Instance variables
     private Node head;
-    private int size; //number of nodes
-    //Add other instance variables you think might be useful.
+    private int size; 
     
-    
-    /**
-     * Constructor for the Tour class.  By default sets head to null.
-     */
-    public Tour() {
+    public Tour2() {
         head = null;
         size = 0;
         
     }
     
-    // ADD YOUR METHODS BELOW HERE
     
     public void insertNearest(Point p) {
         Node newNodeP = new Node(p);
@@ -131,56 +96,54 @@
         length = length + moreDistance;
         return length;
     }
-    
+    //-------------------------------------------------------------------------------------------------------------
     public void insertSmallest(Point p) {
-        Node newNodeP = new Node(p);
-        if (head == null) {
-            head = newNodeP;
+        if (size() == 0) {
+            head = new Node(p);
+            size++;
+            return;
+        } else if (size() == 1) {
+            head.next = new Node(p);
             size++;
             return;
         }
-        Node current = head;
-        double minSum = Double.MAX_VALUE;//current.getData().distanceTo(p) + p.distanceTo(current.next.getData());
-        double totalDistance = distance();
-        Node minNode = current;
-        Node nextMinNode = current.next;
-        Node temp = null;
 
-        while (current.next != null){
-            double originalDistance = current.getData().distanceTo(current.next.getData());
-            double minusOriginal = totalDistance - originalDistance;
-            double sumNodeDistance = current.getData().distanceTo(p) + p.distanceTo(current.next.getData());
-            double sumTotalDistance = sumNodeDistance + minusOriginal;
-            if (sumTotalDistance <= minSum){
-                minSum = sumTotalDistance;
-                minNode = current;
-                nextMinNode = current.next;
+        Node newNodeP = new Node(p);
+        Node current = head;
+        Node next = current.next;
+        Node setNode = null;
+
+        double minSum = Double.MAX_VALUE;
+        while (next != null){
+            double originalDistance = current.getData().distanceTo(next.getData());
+            double newPossibleDistance = current.getData().distanceTo(p) + p.distanceTo(next.getData());
+            if (newPossibleDistance - originalDistance < minSum){
+                minSum = newPossibleDistance - originalDistance;
+                setNode = current;
             }
             current = current.next;
+            next = next.next;
         }
-        //System.out.println(head.getData());
+        //next = head;
         double originalDistance = current.getData().distanceTo(head.getData());
-        double minusOriginal = totalDistance - originalDistance;
-        double sumNodeDistance = current.getData().distanceTo(p) + p.distanceTo(head.getData());
-        double sumTotalDistance = sumNodeDistance + minusOriginal;
-        if (sumTotalDistance <= minSum){
-            minSum = sumTotalDistance;
-            minNode = current;
-            nextMinNode = head;
+        double newPossibleDistance = current.getData().distanceTo(p) + p.distanceTo(head.getData());
+        if (newPossibleDistance - originalDistance < minSum){
+            minSum = newPossibleDistance - originalDistance;
+            setNode = current;
         }
-        
-        minNode.setNext(newNodeP);
-        newNodeP.setNext(nextMinNode);
-        
+        Node tempNode = setNode.next;
+        setNode.setNext(newNodeP);
+        newNodeP.setNext(tempNode);
+    
         size++;
     }
-        
+    //-------------------------------------------------------------------------------------------------------------
+    
     public String toString(Point p){
         Node current = head;
         String str = "";
         while (current != null){
             str += current.p.toString();
-            str += "\n";
             current = current.next;
         }
         return str;
@@ -196,28 +159,23 @@
         current.getData().drawTo(head.getData());
     }
     public static void main(String[] args) {
-        /* Use your main() function to test your code as you write it. 
-         * This main() will not actually be run once you have the entire
-         * Tour class complete, instead you will run the NearestInsertion
-         * and SmallestInsertion programs which call the functions in this 
-         * class. 
-         */
-        
-        
-        //One example test could be the follow (uncomment to run):
-        
-        Tour tour = new Tour();
-        
-        Point p = new Point(0,0);
-        tour.insertSmallest(p);
-        p = new Point(0,100);
-        tour.insertSmallest(p);
-        p = new Point(100, 100);
-        tour.insertSmallest(p);
-        System.out.println("hi");
 
-        p = new Point(200,105);
+        Tour2 tour = new Tour2();
+        
+        Point p = new Point(50,0);
         tour.insertSmallest(p);
+        p = new Point(50,100);
+        tour.insertSmallest(p);
+        p = new Point(100, 50);
+        tour.insertSmallest(p);
+        p = new Point(100, 0);
+        tour.insertSmallest(p);
+        p = new Point(0, 50);
+        tour.insertSmallest(p);
+        // p = new Point(200,105);
+        // tour.insertSmallest(p);
+        // p = new Point(5, 50);
+        // tour.insertSmallest(p);
         
         System.out.println("Tour distance =  " + tour.distance());
         System.out.println("Number of points = "+ tour.size());
@@ -225,8 +183,8 @@
         
          
 	
-        int w = 500 ; //Set this value to the max that x can take on
-        int h = 500 ; //Set this value to the max that y can take on
+        int w = 500 ; 
+        int h = 500 ;
         StdDraw.setCanvasSize(w, h);
         StdDraw.setXscale(0, w);
         StdDraw.setYscale(0, h);
