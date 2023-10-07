@@ -304,7 +304,7 @@ public class Maze {
 
     public void search(){
         MazeSquare startSquare = findStartSquare();
-        System.out.println(startSquare.getCol() +"     "+ startSquare.getRow());
+        // System.out.println(startSquare.getCol() +"     "+ startSquare.getRow());
 
         //Make an LL Stack
         LLStack<MazeSquare> stack = new LLStack<MazeSquare>();
@@ -316,8 +316,27 @@ public class Maze {
             if (T.isEnd() == true){
                 break;
             }
-            MazeSquare bob = getNeighbor(T, "bottom");
-            System.out.println("bob is very happy" + bob.getCol() +"              "+ bob.getRow());
+
+            if ( getNeighbor(T, "top").hasBottomWall() == false && getNeighbor(T, "top").isVisited() == false){
+                stack.push(T);
+                T = getNeighbor(T, "top");
+                System.out.print(T.getCol() + "      " + T.getRow());
+            }
+            else if (getNeighbor(T, "right").hasLeftWall() == false && getNeighbor(T, "right").visited == false){
+                stack.push(T);
+                T = getNeighbor(T, "right");
+                System.out.print(T.getCol() + "      " + T.getRow());
+            }
+            else if (T.hasBottomWall() == false && getNeighbor(T, "bottom").visited == false){
+                stack.push(T);
+                T = getNeighbor(T, "bottom");
+                System.out.print(T.getCol() + "      " + T.getRow());
+            }
+            else if (T.hasLeftWall() == false && getNeighbor(T, "left").visited == false){
+                stack.push(T);
+                T = getNeighbor(T, "left");
+                System.out.print(T.getCol() + "      " + T.getRow());
+            }
             break;
         }
 
