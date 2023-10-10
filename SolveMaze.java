@@ -244,7 +244,7 @@ public class Maze {
                 } else if (!currSquare.isStart() && currSquare.isEnd()) {
                     System.out.print("E  ");
                 } else {
-                    System.out.print("   ");
+                    System.out.print("*  ");
                 }
             }
             System.out.println("|");
