@@ -18,11 +18,11 @@ public class Maze {
     private class MazeSquare {
         private int r, c;
         private boolean top, bottom, left, right,
-                start, end, visited;
+                start, end, visited, hasStar;
 
         private MazeSquare(int r, int c,
                            boolean top, boolean bottom, boolean left, boolean right,
-                           boolean start, boolean end, boolean visited) {
+                           boolean start, boolean end, boolean visited, boolean hasStar) {
             this.r = r;
             this.c = c;
             this.top = top;
@@ -32,6 +32,7 @@ public class Maze {
             this.start = start;
             this.end = end;
             this.visited = visited;
+            this.hasStar = hasStar;
         }
 
         boolean hasTopWall() {
@@ -63,6 +64,14 @@ public class Maze {
         }
         void visit(){
             visited = true;
+        }
+
+        boolean hasStar(){
+            return hasStar;
+        }
+
+        void deleteStar(){
+            hasStar = false;
         }
     }
 
@@ -162,7 +171,7 @@ public class Maze {
                 end = endCol == i && endRow == rowNum;
 
                 // Add a new MazeSquare
-                rowList.get(rowNum).add(new MazeSquare(rowNum, i, top, bottom, left, right, start, end, false));
+                rowList.get(rowNum).add(new MazeSquare(rowNum, i, top, bottom, left, right, start, end, false, true));
             }
 
             rowNum++;
@@ -180,6 +189,7 @@ public class Maze {
 	
         ArrayList<MazeSquare> currRow;
         MazeSquare currSquare;
+
 
         // Print each row of text based on top and left
         for (int r = 0; r < rowList.size(); r++) {
@@ -223,6 +233,10 @@ public class Maze {
 
 		// If currSquare is part of the solution, mark it with *
 
+        if (currSquare.hasStar() && currSquare.isStart() == false && currSquare.isEnd() == false || currSquare.hasStar() && currSquare.isStart() && !currSquare.isEnd()){
+            System.out.print("*");
+        }
+
                 if (currSquare.isStart() && currSquare.isEnd()) {
                     System.out.print("SE ");
                 } else if (currSquare.isStart() && !currSquare.isEnd()) {
@@ -251,6 +265,7 @@ public class Maze {
         for (int c = 0; c < rowList.get(0).size(); c++) {
             System.out.print("+-----");
         }
+        
         System.out.println("+");
     }
 
@@ -310,44 +325,67 @@ public class Maze {
         LLStack<MazeSquare> stack = new LLStack<MazeSquare>();
         stack.push(startSquare);
         startSquare.visit();
+        startSquare.deleteStar();
+
 
         while (stack.isEmpty() == false){
             MazeSquare T = stack.peek();
             if (T.isEnd() == true){
+                T.deleteStar();
                 break;
             }
+                System.out.print(T.getCol() + "      " + T.getRow());
 
-            if ( getNeighbor(T, "top").hasBottomWall() == false && getNeighbor(T, "top").isVisited() == false){
-                stack.push(T);
+            if (T.getRow() != 0 && getNeighbor(T, "top").isVisited() == false && getNeighbor(T, "top").hasBottomWall() == false){
+                System.out.println("up");
+                T.visit();
                 T = getNeighbor(T, "top");
-                System.out.print(T.getCol() + "      " + T.getRow());
-            }
-            else if (getNeighbor(T, "right").hasLeftWall() == false && getNeighbor(T, "right").visited == false){
                 stack.push(T);
-                T = getNeighbor(T, "right");
-                System.out.print(T.getCol() + "      " + T.getRow());
-            }
-            else if (T.hasBottomWall() == false && getNeighbor(T, "bottom").visited == false){
-                stack.push(T);
-                T = getNeighbor(T, "bottom");
-                System.out.print(T.getCol() + "      " + T.getRow());
-            }
-            else if (T.hasLeftWall() == false && getNeighbor(T, "left").visited == false){
-                stack.push(T);
-                T = getNeighbor(T, "left");
-                System.out.print(T.getCol() + "      " + T.getRow());
-            }
-            break;
-        }
+                                T.visit();
 
-        //if the next sqaure not visited and there is no wall, then visit it
-        //look at all the other directions if the parameters are not satisfied (clockwise)
-        //aff visited maze squares into a stack
-        //if hit wall and cant move, the peek.
-        //if not E, then pop all the top squares until you reach a visited square that can still turn/explore another direction
-        //continue process until you hit a wall again and can't move
-        //peek, if E then done
-        //if not E, no solution
+                System.out.print(T.getCol() + "      " + T.getRow());
+            
+            }
+        
+            else if (T.getCol() != h && getNeighbor(T, "right").hasLeftWall() == false && getNeighbor(T, "right").visited == false){ // why is it h, not w?
+                System.out.println("right");
+                T.visit();
+                T = getNeighbor(T, "right");
+                stack.push(T);
+                                T.visit();
+
+                System.out.print(T.getCol() + "      " + T.getRow());
+            }
+            else if (T.getRow() != w && T.hasBottomWall() == false && getNeighbor(T, "bottom").visited == false){
+                System.out.println("down");
+                T.visit();
+                T = getNeighbor(T, "bottom");
+                stack.push(T);
+                T.visit();
+                System.out.print(T.getCol() + "      " + T.getRow());
+            }
+            else if (T.getCol() != 0 && getNeighbor(T, "left").visited == false && T.hasLeftWall() == false){
+                System.out.println("left");
+                T.visit();
+                T = getNeighbor(T, "left");
+                stack.push(T);
+                                T.visit();
+
+                System.out.print(T.getCol() + "      " + T.getRow());
+            }
+            else{
+                T.deleteStar();
+                System.out.print("DO YOU HAVE A STAR:      " + T.hasStar());
+                stack.pop();
+                System.out.println("popped");
+            }
+
+    
+
+        //if it returns to the s and is empty, (E is hidden/unreachable), unsovable maze
+        //add stars for path 
+    //}
+}
     }
 
     // This main program acts as a simple unit test for the
@@ -362,5 +400,6 @@ public class Maze {
         maze.load(args[0]);
         maze.print();
         maze.search();
+    
     }
 }
