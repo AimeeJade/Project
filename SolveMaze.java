@@ -233,10 +233,9 @@ public class Maze {
 
 		// If currSquare is part of the solution, mark it with *
 
-        if (currSquare.hasStar() && currSquare.isStart() == false && currSquare.isEnd() == false || currSquare.hasStar() && currSquare.isStart() && !currSquare.isEnd()){
-            System.out.print("*");
-        }
+       
 
+        
                 if (currSquare.isStart() && currSquare.isEnd()) {
                     System.out.print("SE ");
                 } else if (currSquare.isStart() && !currSquare.isEnd()) {
@@ -246,7 +245,13 @@ public class Maze {
                 } else {
                     System.out.print("*  ");
                 }
-            }
+            
+        if (currSquare.hasStar() == false){
+
+            System.out.print("  ");
+                
+        }
+        }
             System.out.println("|");
 
             // Fourth line of text: same as second
@@ -272,6 +277,7 @@ public class Maze {
     public MazeSquare getSquare(int row, int col ){
         return  rowList.get(row).get(col);
     }
+
 
     public MazeSquare getNeighbor(MazeSquare s, String direction){
         //find the row and column of s, and change the row and column depending on the direction
@@ -316,22 +322,29 @@ public class Maze {
 
         return current;
     }
+//get the stack
+//iterate thru stack to do contains in 
+public LLStack getSolution(){
+    LLStack stack = new LLStack<>();
+    return stack;
+   
+
+}
 
     public void search(){
         MazeSquare startSquare = findStartSquare();
-        // System.out.println(startSquare.getCol() +"     "+ startSquare.getRow());
 
         //Make an LL Stack
         LLStack<MazeSquare> stack = new LLStack<MazeSquare>();
         stack.push(startSquare);
         startSquare.visit();
-        startSquare.deleteStar();
+        //startSquare.deleteStar();
 
 
         while (stack.isEmpty() == false){
             MazeSquare T = stack.peek();
             if (T.isEnd() == true){
-                T.deleteStar();
+                //T.deleteStar();
                 break;
             }
                 System.out.print(T.getCol() + "      " + T.getRow());
@@ -341,8 +354,7 @@ public class Maze {
                 T.visit();
                 T = getNeighbor(T, "top");
                 stack.push(T);
-                                T.visit();
-
+                T.visit();
                 System.out.print(T.getCol() + "      " + T.getRow());
             
             }
@@ -352,8 +364,7 @@ public class Maze {
                 T.visit();
                 T = getNeighbor(T, "right");
                 stack.push(T);
-                                T.visit();
-
+                T.visit();
                 System.out.print(T.getCol() + "      " + T.getRow());
             }
             else if (T.getRow() != w && T.hasBottomWall() == false && getNeighbor(T, "bottom").visited == false){
@@ -369,8 +380,7 @@ public class Maze {
                 T.visit();
                 T = getNeighbor(T, "left");
                 stack.push(T);
-                                T.visit();
-
+                T.visit();
                 System.out.print(T.getCol() + "      " + T.getRow());
             }
             else{
@@ -379,12 +389,12 @@ public class Maze {
                 stack.pop();
                 System.out.println("popped");
             }
-
     
 
         //if it returns to the s and is empty, (E is hidden/unreachable), unsovable maze
         //add stars for path 
     //}
+
 }
     }
 
