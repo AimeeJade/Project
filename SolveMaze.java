@@ -320,7 +320,7 @@ public class Maze {
     }
 
     // method that stores maze squares in the solution and pops squares that lead to dead ends
-    public LLStack<MazeSquare> search(){
+    public LLStack<MazeSquare> getSolution(){
         // assign start square
         MazeSquare startSquare = findStartSquare();
 
@@ -397,7 +397,7 @@ return stack;
 
         Maze maze = new Maze();
         maze.load(args[0]);
-        maze.search();
+        maze.getSolution();
         maze.print();
     
     }
