@@ -93,19 +93,15 @@ public class SortTest2 {
      * The current contents are just to give you an example.
      */
     public static void main(String[] args) {
-        int[] standardSortArray = new int[10000];
-        //fillReverse(standardSortArray);
-        fillAndShuffle(standardSortArray);
-        // for (int i = 0; i < standardSortArray.length; i++){
-        //         System.out.print(standardSortArray[i] + " ");
-        //     }
+        int[] standardSortArray = new int[100];
+        fillReverse(standardSortArray);
+        //fillAndShuffle(standardSortArray);
+        printArr(standardSortArray);
         long startTime = System.currentTimeMillis();
         //Arrays.sort(standardSortArray);
         bubbleSort(standardSortArray);
         long endTime = System.currentTimeMillis();
-        // for (int i = 0; i < standardSortArray.length; i++){
-        //         System.out.print(standardSortArray[i] + " ");
-        //     }
+        printArr(standardSortArray);
         System.out.println("Array length: " + standardSortArray.length + "; time to sort (ms): " + (endTime-startTime));
 
     }
