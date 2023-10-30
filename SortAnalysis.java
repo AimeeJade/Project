@@ -53,21 +53,52 @@ public class SortTest {
         }
     }
 
+    public static void bubbleSort(int[] arr) {
+        for (int item : arr){
+            for (int j = 0; j < arr.length -1; j++){
+                if (arr[j] > arr[j+1]){
+                    int temp = arr[j];
+                    int temp2 = arr[j+1];
+                    arr[j+1] = temp;
+                    arr[j] = temp2;
+                }
+            }
+        }
+
+     }
+    
+    public static void reverseArray(int[] arr){
+        int [] temp = new int[arr.length];
+        for (int i = 0; i < temp.length; i++){
+            temp[i] = temp.length - i;
+        }
+
+    }
+
     /**
      * You'll put your experiments for the investigation here.
      * The current contents are just to give you an example.
      */
     public static void main(String[] args) {
-        System.err.println("Investigation not yet designed and carried out!");
+        
+        //System.err.println("Investigation not yet designed and carried out!");
+        int[] standardSortArray = new int[10];
+        int[] standardSortArray2 = new int[10];
+        // reverseArray(standardSortArray);
+        
 
-        //This is just an example of how you might do timing - you can erase
-        // it and write your own investigation.
-        int[] standardSortArray = new int[1000000];
         fillAndShuffle(standardSortArray);
         long startTime = System.currentTimeMillis();
         Arrays.sort(standardSortArray);
         long endTime = System.currentTimeMillis();
+        // for (int i = 0; i < standardSortArray.length; i++){
+        //     System.out.print(standardSortArray[i] + " ");
+        // }
+        long bubbleStartTime = System.currentTimeMillis();
+        bubbleSort(standardSortArray2);
+        long bubbleEndTime = System.currentTimeMillis();
         System.out.println("Array length: " + standardSortArray.length + "; time to sort (ms): " + (endTime-startTime));
-
+        System.out.println("Bubble array length: " + standardSortArray2.length + "; time to sort (ms): " + (bubbleEndTime-bubbleStartTime));
     }
 }
+
