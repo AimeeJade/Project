@@ -18,7 +18,7 @@ import java.lang.*;
  * @author Sneha Narayan
  * @author [YOUR NAMES HERE]
  */
-public class SortTest2 {
+public class SortTest {
 
     /**
      * Helper function you may decide to use to print out a given array to the console.
@@ -40,7 +40,7 @@ public class SortTest2 {
     public static void fillReverse(int[] a) {
         // Fill the array with the integers from 0 to a.length - 1.
         for (int i = 0; i < a.length; i++) {
-            a[i] = a.length - i;
+            a[i] = a.length - 1 - i;
         }
     }
 
@@ -57,6 +57,13 @@ public class SortTest2 {
             int temp = a[k];
             a[k] = a[swapIndex];
             a[swapIndex] = temp;
+        }
+    }
+
+    public static void fill(int[] a) {
+        // Fill the array with the integers from 0 to a.length - 1.
+        for (int i = 0; i < a.length; i++) {
+            a[i] = i;
         }
     }
 
@@ -93,9 +100,10 @@ public class SortTest2 {
      * The current contents are just to give you an example.
      */
     public static void main(String[] args) {
-        int[] standardSortArray = new int[100];
-        fillReverse(standardSortArray);
+        int[] standardSortArray = new int[25000];
+        //fillReverse(standardSortArray);
         //fillAndShuffle(standardSortArray);
+        fill(standardSortArray);
         printArr(standardSortArray);
         long startTime = System.currentTimeMillis();
         //Arrays.sort(standardSortArray);
@@ -107,4 +115,3 @@ public class SortTest2 {
     }
     
 }
-
